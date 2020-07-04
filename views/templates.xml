@@ -1,0 +1,156 @@
+<odoo>
+    <data>
+
+        <record id="dotmatrix_invoice" model="mail.template">
+            <field name="name">Dot Matrix Invoice</field>
+            <field name="model_id" ref="account.model_account_invoice"/>
+            <field name="subject">Dot Matrix Invoice</field>
+            <field name="body_html"><![CDATA[
+${object.company_id.name.ljust(90)} ${'INVOICE REF:'.rjust(29)} ${object.number.rjust(15)}
+Jl. Piere Tendean No. 146, Watubangga, Baruga ${'KENDARI, '.rjust(79)} ${object.date_invoice}
+0852-4098-9990
+${''.rjust(136,'-')}
+ ${'Pelanggan:'.ljust(80)} ${'J. Waktu Pembayaran: '.rjust(54)}
+ ${object.partner_id.display_name.ljust(80)} ${object.payment_term_id.name.rjust(54) if object.payment_term_id else ''.rjust(54)}
+ ${object.partner_id.street if object.partner_id.street else ''} 
+
+
+${''.rjust(136,'-')}
+ ${'Produk'.ljust(70)}|${'Jumlah'.center(10)}|${'Harga Unit'.center(15)}|${'Disk (%)'.center(15)}|${'Sub Total'.rjust(20)}
+${''.rjust(136,'-')}
+% for l in object.invoice_line_ids:
+ ${l.product_id.display_name[:70].ljust(70)}|${"{:4,.2f}".format(l.quantity).center(10)}|${"{:4,.0f}".format(l.price_unit).center(15)}|${"{:4,.2f}".format(l.discount).center(15)}|${"{:4,.0f}".format(l.price_subtotal).rjust(20)}
+% endfor
+${''.rjust(136,'-')}
+${'Total Sebelum Pajak:'.rjust(109)} ${ "{:20,.0f}".format(object.amount_untaxed).rjust(25)}
+${'Pajak:'.rjust(109)} ${"{:20,.0f}".format(object.amount_tax).rjust(25)}
+${'Total:'.rjust(109)} ${"{:20,.0f}".format(object.amount_total).rjust(25)}
+${'Sisa Tagihan:'.rjust(109)} ${"{:20,.0f}".format(object.residual).rjust(25)}
+
+
+${''.center(23)}${'Dibuat Oleh'.center(20)} ${''.center(48)} ${'Diterima Oleh'.center(20)}
+
+
+
+${''.center(23)}${''.center(20,'-')} ${''.center(48)} ${''.center(20,'-')}
+${''.center(23)}${object.user_id.name.center(20)}
+]]></field>
+
+        </record>
+
+
+        <record id="dotmatrix_po" model="mail.template">
+            <field name="name">Dot Matrix PO</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="subject">Dot Matrix PO</field>
+                <field name="body_html"><![CDATA[
+${object.company_id.name.ljust(77)} ${'PURCHASE ORDER'.rjust(50)} ${object.name}
+Jl. Piere Tendean No. 146, Watubangga, Baruga
+0852-4098-9990
+${''.rjust(136,'-')}
+${'Pemasok:'.ljust(9)} ${'Tgl Pemesanan,'.rjust(106)} ${ object.date_order }
+${object.partner_id.display_name}
+
+Produk
+
+${''.rjust(136,'-')}
+ ${'Produk'.ljust(60)}|${'Tgl Jadwal'.center(12)}|${'Jumlah'.center(10)}|${'Unit Stok'.center(12)}|${'Harga Unit'.center(16)}|${'Subtotal'.rjust(19)}
+${''.rjust(136,'-')}
+% for l in object.order_line:
+ ${l.product_id.display_name[:60].ljust(60)}|${l.date_planned[:10].center(12)}|${"{:4,.0f}".format(l.product_qty).center(10)}|${l.product_uom.name[:12].center(12)}|${ "{:4,.0f}".format(l.price_unit).center(16)}|${ "{:4,.0f}".format(l.price_subtotal).rjust(19) }
+% endfor
+${''.rjust(136,'-')}
+${'Total Sebelum Pajak:'.rjust(107)} ${ "{:20,.0f}".format(object.amount_untaxed).rjust(27) }
+${'Pajak:'.rjust(107)} ${ "{:20,.0f}".format(object.amount_tax).rjust(27) }
+${'Total:'.rjust(107)} ${"{:20,.0f}".format(object.amount_total).rjust(27)}
+]]></field>
+
+        </record>
+
+
+
+        <record id="dotmatrix_picking" model="mail.template">
+            <field name="name">Dot Matrix Picking</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="subject">Dot Matrix Picking</field>
+            <field name="body_html"><![CDATA[
+${object.company_id.name.ljust(105)} ${'DELIVERY ORDER'.rjust(14)} ${object.name.rjust(15)}
+Jl. Piere Tendean No. 146, Watubangga, Baruga 
+0852-4098-9990
+${''.rjust(136, '-')}
+${'Rekan:'.ljust(6)} ${'Tgl Terjadwal,'.rjust(118)} ${object.min_date[:10]}
+${object.partner_id.display_name.ljust(90)} ${'Sumber Dokumen:'.rjust(24)} ${object.origin.rjust(20)}
+${'Tipe Operasi:'.rjust(115)} ${object.picking_type_id.name.rjust(20)}
+Jumlah yang belum Dikirim:
+${object.backorder_id.name if object.backorder_id else ''}
+
+
+${''.rjust(136, '-')}
+ ${'Produk'.ljust(86)}|${'Satuan Unit'.center(13)}|${'Jumlah dikirim'.center(16)}|${'Jumlah diterima'.rjust(16)}
+${''.rjust(136, '-')}
+% for l in object.move_lines
+ ${l.product_id.display_name[:86].ljust(86)}|${l.product_uom.name[:13].center(13)}|${"{:4,.2f}".format(l.product_uom_qty).center(16)}|
+% endfor
+${''.rjust(136, '-')}
+
+${''.center(23)}${'Checker Toko'.center(20)} ${''.center(13)} ${'Checker Ekspedisi'.center(20)} ${''.center(13)} ${'Pelanggan'.center(20)}
+
+
+
+${''.center(23)}${''.center(20,'-')} ${''.center(13)} ${''.center(20, '-')} ${''.center(13)} ${''.center(20,'-')}
+
+
+
+]]></field>
+
+        </record>
+
+
+
+
+
+        <record id="dotmatrix_so" model="mail.template">
+            <field name="name">Dot Matrix SO</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">Dot Matrix SO</field>
+            <field name="body_html"><![CDATA[
+${object.company_id.name.ljust(90)} ${'SALE ORDER'.rjust(34)} ${object.name.rjust(10)}
+Jl. Piere Tendean No. 146, Watubangga, Baruga 
+0852-4098-9990
+${''.rjust(136, '-')}
+${'Tgl Pemesanan,'.rjust(116)} ${ object.date_order }
+${'Pelanggan:'.ljust(11)} ${'J. Waktu Pembayaran:'.rjust(124)}
+${object.partner_id.display_name.ljust(115)} ${object.payment_term_id.name[:20].rjust(20) if object.payment_term_id else ''.rjust(20)}
+${object.partner_id.street if object.partner_id.street else '' }, ${object.partner_id.city if object.partner_id.city else ''}, ${object.partner_id.state_id.name if object.partner_id.state_id else ''}
+${object.partner_id.country_id.name if object.partner_id.country_id else ''}
+
+
+${''.rjust(136, '-')}
+ ${'Produk'.ljust(70)}|${'Jumlah'.center(10)}|${'Harga Unit'.center(15)}|${'Pajak'.center(15)}|${'Subtotal'.rjust(20)}
+${''.rjust(136, '-')}
+% for l in object.order_line
+ ${l.name[:60].ljust(70)}|${"{:4,.2f}".format(l.product_uom_qty).center(10)}|${"{:4,.2f}".format(l.price_unit).center(15)}|${l.tax_id.name.center(15) if l.tax_id else ''.center(15)}|${"{:4,.2f}".format(l.price_subtotal).rjust(20)}
+% endfor
+${''.rjust(136, '-')}
+${'Total Sebelum Pajak:'.rjust(109)} ${"{:4,.2f}".format(object.amount_untaxed).rjust(25)}
+${'Pajak:'.rjust(109)} ${"{:4,.2f}".format(object.amount_tax).rjust(25)}
+${'Total:'.rjust(109)} ${"{:4,.2f}".format(object.amount_total).rjust(25)}
+
+
+${''.center(23)}${'Dibuat Oleh'.center(20)} ${''.center(13)} ${'Checker Toko'.center(20)} ${''.center(13)} ${'Diterima Oleh'.center(20)}
+
+
+
+${''.center(23)}${''.center(20,'-')} ${''.center(13)} ${''.center(20, '-')} ${''.center(13)} ${''.center(20,'-')}
+${''.center(23)}${object.user_id.name.center(20)}
+
+
+
+]]></field>
+
+        </record>
+
+
+
+    </data>
+</odoo>
