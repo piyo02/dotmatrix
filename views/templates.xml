@@ -14,7 +14,6 @@ ${''.rjust(136,'-')}
  ${object.partner_id.display_name.ljust(80)} ${object.payment_term_id.name.rjust(54) if object.payment_term_id else ''.rjust(54)}
  ${object.partner_id.street if object.partner_id.street else ''} 
 
-
 ${''.rjust(136,'-')}
  ${'Produk'.ljust(70)}|${'Jumlah'.center(10)}|${'Harga Unit'.center(15)}|${'Disk (%)'.center(15)}|${'Sub Total'.rjust(20)}
 ${''.rjust(136,'-')}
@@ -84,7 +83,6 @@ ${'Tipe Operasi:'.rjust(115)} ${object.picking_type_id.name.rjust(20)}
 Jumlah yang belum Dikirim:
 ${object.backorder_id.name if object.backorder_id else ''}
 
-
 ${''.rjust(136, '-')}
  ${'Produk'.ljust(86)}|${'Satuan Unit'.center(13)}|${'Jumlah dikirim'.center(16)}|${'Jumlah diterima'.rjust(16)}
 ${''.rjust(136, '-')}
@@ -121,9 +119,7 @@ ${''.rjust(136, '-')}
 ${'Tgl Pemesanan,'.rjust(116)} ${ object.date_order }
 ${'Pelanggan:'.ljust(11)} ${'J. Waktu Pembayaran:'.rjust(124)}
 ${object.partner_id.display_name.ljust(115)} ${object.payment_term_id.name[:20].rjust(20) if object.payment_term_id else ''.rjust(20)}
-${object.partner_id.street if object.partner_id.street else '' }, ${object.partner_id.city if object.partner_id.city else ''}, ${object.partner_id.state_id.name if object.partner_id.state_id else ''}
-${object.partner_id.country_id.name if object.partner_id.country_id else ''}
-
+${object.partner_id.street if object.partner_id.street else '(Jalan)' }, ${object.partner_id.city if object.partner_id.city else '(Kota)'}, ${object.partner_id.state_id.name if object.partner_id.state_id else '(Provinsi)'}, ${object.partner_id.country_id.name if object.partner_id.country_id else '(Negara)'}
 
 ${''.rjust(136, '-')}
  ${'Produk'.ljust(70)}|${'Jumlah'.center(10)}|${'Harga Unit'.center(15)}|${'Pajak'.center(15)}|${'Subtotal'.rjust(20)}
