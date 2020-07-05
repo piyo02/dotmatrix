@@ -12,8 +12,8 @@ Jl. Piere Tendean No. 146, Watubangga, Baruga ${'KENDARI, '.rjust(79)} ${object.
 ${''.rjust(136,'-')}
  ${'Pelanggan:'.ljust(80)} ${'J. Waktu Pembayaran: '.rjust(54)}
  ${object.partner_id.display_name.ljust(80)} ${object.payment_term_id.name.rjust(54) if object.payment_term_id else ''.rjust(54)}
- ${object.partner_id.street if object.partner_id.street else ''} 
-
+ ${object.partner_id.street[:107].ljust(107) if object.partner_id.street else ''.ljust(107)} ${'Tgl Jatuh Tempo:'.rjust(15)} ${object.date_due}
+ Sales: ${object.user_id.name}
 ${''.rjust(136,'-')}
  ${'Produk'.ljust(70)}|${'Jumlah'.center(10)}|${'Harga Unit'.center(15)}|${'Disk (%)'.center(15)}|${'Sub Total'.rjust(20)}
 ${''.rjust(136,'-')}
@@ -32,7 +32,6 @@ ${''.center(23)}${'Dibuat Oleh'.center(20)} ${''.center(48)} ${'Diterima Oleh'.c
 
 
 ${''.center(23)}${''.center(20,'-')} ${''.center(48)} ${''.center(20,'-')}
-${''.center(23)}${object.user_id.name.center(20)}
 ]]></field>
 
         </record>
@@ -49,9 +48,6 @@ Jl. Piere Tendean No. 146, Watubangga, Baruga
 ${''.rjust(136,'-')}
 ${'Pemasok:'.ljust(9)} ${'Tgl Pemesanan,'.rjust(106)} ${ object.date_order }
 ${object.partner_id.display_name}
-
-Produk
-
 ${''.rjust(136,'-')}
  ${'Produk'.ljust(60)}|${'Tgl Jadwal'.center(12)}|${'Jumlah'.center(10)}|${'Unit Stok'.center(12)}|${'Harga Unit'.center(16)}|${'Subtotal'.rjust(19)}
 ${''.rjust(136,'-')}
@@ -82,7 +78,6 @@ ${object.partner_id.display_name.ljust(90)} ${'Sumber Dokumen:'.rjust(24)} ${obj
 ${'Tipe Operasi:'.rjust(115)} ${object.picking_type_id.name.rjust(20)}
 Jumlah yang belum Dikirim:
 ${object.backorder_id.name if object.backorder_id else ''}
-
 ${''.rjust(136, '-')}
  ${'Produk'.ljust(86)}|${'Satuan Unit'.center(13)}|${'Jumlah dikirim'.center(16)}|${'Jumlah diterima'.rjust(16)}
 ${''.rjust(136, '-')}
@@ -91,11 +86,15 @@ ${''.rjust(136, '-')}
 % endfor
 ${''.rjust(136, '-')}
 
-${''.center(23)}${'Checker Toko'.center(20)} ${''.center(13)} ${'Checker Ekspedisi'.center(20)} ${''.center(13)} ${'Pelanggan'.center(20)}
-
-
-
-${''.center(23)}${''.center(20,'-')} ${''.center(13)} ${''.center(20, '-')} ${''.center(13)} ${''.center(20,'-')}
+Catatan
+Penerima membukukan tanda tangan dan stempel setelah:
+1. Penerima memeriksa barang yang diterima dalam keadaan baik atau
+   tidak rusak dan sesuai dengan Surat Jalan ${''.center(35)} ${'Checker'.center(10)}${''.center(5)}${'K. Gudang'.center(10)}${''.center(5)}${'Pengantar'.center(10)}${''.center(5)}${'Penerima'.center(10)}
+2. Toko Karya Kaya Santosa tidak menerima klaim setelah SJ sudah 
+   disetujui
+3. Mengetahui &amp; menyetujui bahwa barang yang belum dilunasi masih 
+   merupakan milik Toko Karya Kaya Santosa sehingga tidak keberatan ${''.center(12)} ${''.center(10, '-')}${''.center(5)}${''.center(10, '-')}${''.center(5)}${''.center(10, '-')}${''.center(5)}${''.rjust(10, '-')}
+   apabila sewaktu-waktu ditarik kembali
 
 
 
@@ -120,7 +119,6 @@ ${'Tgl Pemesanan,'.rjust(116)} ${ object.date_order }
 ${'Pelanggan:'.ljust(11)} ${'J. Waktu Pembayaran:'.rjust(124)}
 ${object.partner_id.display_name.ljust(115)} ${object.payment_term_id.name[:20].rjust(20) if object.payment_term_id else ''.rjust(20)}
 ${object.partner_id.street if object.partner_id.street else '(Jalan)' }, ${object.partner_id.city if object.partner_id.city else '(Kota)'}, ${object.partner_id.state_id.name if object.partner_id.state_id else '(Provinsi)'}, ${object.partner_id.country_id.name if object.partner_id.country_id else '(Negara)'}
-
 ${''.rjust(136, '-')}
  ${'Produk'.ljust(70)}|${'Jumlah'.center(10)}|${'Harga Unit'.center(15)}|${'Pajak'.center(15)}|${'Subtotal'.rjust(20)}
 ${''.rjust(136, '-')}
@@ -132,13 +130,15 @@ ${'Total Sebelum Pajak:'.rjust(109)} ${"{:4,.2f}".format(object.amount_untaxed).
 ${'Pajak:'.rjust(109)} ${"{:4,.2f}".format(object.amount_tax).rjust(25)}
 ${'Total:'.rjust(109)} ${"{:4,.2f}".format(object.amount_total).rjust(25)}
 
-
-${''.center(23)}${'Dibuat Oleh'.center(20)} ${''.center(13)} ${'Checker Toko'.center(20)} ${''.center(13)} ${'Diterima Oleh'.center(20)}
-
-
-
-${''.center(23)}${''.center(20,'-')} ${''.center(13)} ${''.center(20, '-')} ${''.center(13)} ${''.center(20,'-')}
-${''.center(23)}${object.user_id.name.center(20)}
+Catatan
+Penerima membukukan tanda tangan dan stempel setelah:
+1. Penerima memeriksa barang yang diterima dalam keadaan baik atau
+   tidak rusak dan sesuai dengan Surat Jalan ${''.center(35)} ${'Checker'.center(10)}${''.center(5)}${'K. Gudang'.center(10)}${''.center(5)}${'Pengantar'.center(10)}${''.center(5)}${'Penerima'.center(10)}
+2. Toko Karya Kaya Santosa tidak menerima klaim setelah SJ sudah 
+   disetujui
+3. Mengetahui &amp; menyetujui bahwa barang yang belum dilunasi masih 
+   merupakan milik Toko Karya Kaya Santosa sehingga tidak keberatan ${''.center(12)} ${''.center(10, '-')}${''.center(5)}${''.center(10, '-')}${''.center(5)}${''.center(10, '-')}${''.center(5)}${''.rjust(10, '-')}
+   apabila sewaktu-waktu ditarik kembali
 
 
 
