@@ -90,10 +90,10 @@ Catatan
 Penerima membukukan tanda tangan dan stempel setelah:
 1. Penerima memeriksa barang yang diterima dalam keadaan baik atau
    tidak rusak dan sesuai dengan Surat Jalan ${''.center(35)} ${'Checker'.center(10)}${''.center(5)}${'K. Gudang'.center(10)}${''.center(5)}${'Pengantar'.center(10)}${''.center(5)}${'Penerima'.center(10)}
-2. Karya Kaya Santosa tidak menerima klaim setelah SJ sudah 
+2. Karya Jaya Santosa tidak menerima klaim setelah SJ sudah 
    disetujui
 3. Mengetahui &amp; menyetujui bahwa barang yang belum dilunasi masih 
-   merupakan milik Karya Kaya Santosa sehingga tidak keberatan ${''.center(17)} ${''.center(10, '-')}${''.center(5)}${''.center(10, '-')}${''.center(5)}${''.center(10, '-')}${''.center(5)}${''.rjust(10, '-')}
+   merupakan milik Karya Jaya Santosa sehingga tidak keberatan ${''.center(17)} ${''.center(10, '-')}${''.center(5)}${''.center(10, '-')}${''.center(5)}${''.center(10, '-')}${''.center(5)}${''.rjust(10, '-')}
    apabila sewaktu-waktu ditarik kembali
 
 
@@ -120,24 +120,24 @@ ${'Pelanggan:'.ljust(11)} ${'J. Waktu Pembayaran:'.rjust(124)}
 ${object.partner_id.display_name.ljust(115)} ${object.payment_term_id.name[:20].rjust(20) if object.payment_term_id else ''.rjust(20)}
 ${object.partner_id.street if object.partner_id.street else '(Jalan)' }, ${object.partner_id.city if object.partner_id.city else '(Kota)'}, ${object.partner_id.state_id.name if object.partner_id.state_id else '(Provinsi)'}, ${object.partner_id.country_id.name if object.partner_id.country_id else '(Negara)'}
 ${''.rjust(136, '-')}
- ${'Produk'.ljust(70)}|${'Jumlah'.center(10)}|${'Harga Unit'.center(15)}|${'Pajak'.center(15)}|${'Subtotal'.rjust(20)}
+ ${'Produk'.ljust(60)}|${'Jumlah'.center(10)}|${'UoM'.center(12)}|${'Harga Unit'.rjust(12)}|${'Diskon'.rjust(15)}|${'Subtotal'.rjust(20)}
 ${''.rjust(136, '-')}
 % for l in object.order_line
- ${l.name[:60].ljust(70)}|${"{:4,.2f}".format(l.product_uom_qty).center(10)}|${"{:4,.2f}".format(l.price_unit).center(15)}|${l.tax_id.name.center(15) if l.tax_id else ''.center(15)}|${"{:4,.2f}".format(l.price_subtotal).rjust(20)}
+ ${l.name[:60].ljust(60)}|${"{:4,.2f}".format(l.product_uom_qty).center(10)}|${l.product_uom.name.center(12)}|${"{:4,.2f}".format(l.price_unit).rjust(12)}|${"{:4,.2f}".format(l.discount).rjust(15)}|${"{:4,.2f}".format(l.price_subtotal).rjust(20)}
 % endfor
 ${''.rjust(136, '-')}
-${'Total Sebelum Pajak:'.rjust(109)} ${"{:4,.2f}".format(object.amount_untaxed).rjust(25)}
-${'Pajak:'.rjust(109)} ${"{:4,.2f}".format(object.amount_tax).rjust(25)}
+${'Total Sebelum Diskon:'.rjust(109)} ${"{:4,.2f}".format(object.price_total_no_discount).rjust(25)}
+${'Diskon:'.rjust(109)} ${"{:4,.2f}".format(object.discount_total).rjust(25)}
 ${'Total:'.rjust(109)} ${"{:4,.2f}".format(object.amount_total).rjust(25)}
 
 Catatan
 Penerima membukukan tanda tangan dan stempel setelah:
 1. Penerima memeriksa barang yang diterima dalam keadaan baik atau
    tidak rusak dan sesuai dengan Surat Jalan ${''.center(35)} ${'Checker'.center(10)}${''.center(5)}${'K. Gudang'.center(10)}${''.center(5)}${'Pengantar'.center(10)}${''.center(5)}${'Penerima'.center(10)}
-2. Karya Kaya Santosa tidak menerima klaim setelah SJ sudah 
+2. Karya Jaya Santosa tidak menerima klaim setelah SJ sudah 
    disetujui
 3. Mengetahui &amp; menyetujui bahwa barang yang belum dilunasi masih 
-   merupakan milik Karya Kaya Santosa sehingga tidak keberatan ${''.center(17)} ${''.center(10, '-')}${''.center(5)}${''.center(10, '-')}${''.center(5)}${''.center(10, '-')}${''.center(5)}${''.rjust(10, '-')}
+   merupakan milik Karya Jaya Santosa sehingga tidak keberatan ${''.center(17)} ${''.center(10, '-')}${''.center(5)}${''.center(10, '-')}${''.center(5)}${''.center(10, '-')}${''.center(5)}${''.rjust(10, '-')}
    apabila sewaktu-waktu ditarik kembali
 
 
