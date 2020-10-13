@@ -18,7 +18,7 @@
                     <page string="Dot Matrix">
 
                         <button string="Refresh Printer Data" icon="fa-print"
-                                states="open,paid" type="object" name="action_refresh_printer_data"/>
+                                states="draft,open,paid" type="object" name="action_refresh_printer_data"/>
 
                         <pre>
                             <field name="printer_data"/>
